@@ -9,7 +9,7 @@ describe("retrieve", function() {
   });
   it("Should return an error when there are no instances for a type.", function() {
     var Newbie = function(){};
-    var instance = instances.retrieve(Newbie, ['functor']).functor;
+    var instance = instances.retrieve(Newbie, ['monoid']).monoid;
     expect(instance.constructor).toEqual(Error);
   });
   it("Should return an object when there is an instance matching the request for the type.", function() {
