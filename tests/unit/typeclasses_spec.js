@@ -1,5 +1,5 @@
 var root       = __dirname + '/../../';
-var instances  = require(root + 'lib/instances');
+var instances  = require(root + 'lib/typeclasses');
 var _          = require('underscore');
 
 describe("retrieve", function() {

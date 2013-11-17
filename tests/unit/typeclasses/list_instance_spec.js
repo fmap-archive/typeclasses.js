@@ -1,4 +1,4 @@
-var lib = require('../../../lib/instances');
+var lib = require('../../../lib/typeclasses');
 var instances = lib.retrieve([],[
   'functor', 'applicative', 'monad', 'foldable', 'indexable', 'monoid'
 ]);
