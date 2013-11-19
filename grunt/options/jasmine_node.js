@@ -1,5 +1,5 @@
 module.exports = {
   unit: {
-    specFolders: ['tests/unit/']
+    specFolders: ['tests/']
   }
 };

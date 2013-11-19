@@ -1,4 +1,4 @@
-var root       = __dirname + '/../../';
+var root       = __dirname + '/../';
 var instances  = require(root + 'lib/typeclasses');
 var _          = require('underscore');
 

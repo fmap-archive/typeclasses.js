@@ -1,17 +1,18 @@
 var _ = require('underscore');
-var lib = require('../../../lib/typeclasses');
-var instances = lib.retrieve({},['functor', 'monoid', 'foldable', 
-                                 'indexable', 'applicative', 'monad']);
-var identity = function(x) { return x; };
+var hf = require('../helpers/function_helper');
+var hi = require('../helpers/interface_helper');
+var instances = hi.retrieve({}, [
+  'functor', 'monoid', 'foldable', 
+  'indexable', 'applicative', 'monad'
+]);
 
 describe("object functor instance", function() {
   var fmap = instances.functor.map;
   it("map should apply the function to each element", function() {
-    var t0 = fmap({a:1,b:2}, function(x){return (x+1);});
+    var t0 = fmap({a:1,b:2}, hf.succ(1));
     expect(t0).toEqual({a:2,b:3});
-
-    var comp0 = fmap({a:1,b:2},function(f) { return f+1+2; });
-    var comp1 = fmap(fmap({a:1,b:2},function(f) { return f+1; }) ,function(f) { return f+2; });
+    var comp0 = fmap({a:1,b:2},hf.succ(3));
+    var comp1 = fmap(fmap({a:1,b:2},hf.succ(1)),hf.succ(2));
     expect(comp0).toEqual(comp1);
   });
 });
@@ -33,9 +34,8 @@ describe("object foldable instance", function() {
   var foldr = instances.foldable.foldr;
   var foldl = instances.foldable.foldl;
   it("folds", function() {
-    var add = function(x,y) { return x+y; };
-    expect(foldr({a:2,b:3,c:3}, add, 9)).toEqual(17);
-    expect(foldl({a:2,b:3,c:3}, add, 9)).toEqual(17);
+    expect(foldr({a:2,b:3,c:3}, hf.add, 9)).toEqual(17);
+    expect(foldl({a:2,b:3,c:3}, hf.add, 9)).toEqual(17);
   });
 });
 
@@ -67,12 +67,12 @@ describe("object applicative instance", function() {
     expect(pure(0)).toEqual({pure: 0});
   });
   it("extract", function() {
-    var fn = {succ: function(x){return x+1;}, 
-              pred: function(x){return x-1;}};
+    var fn = {succ: hf.succ(1),
+              pred: hf.pred(1)};
     var xs = {a:1,b:2};
     var r0 = extract(fn,xs);
     expect(_.values(r0)).toEqual([2,3,0,1]);
-    var r1 = extract(pure(identity),xs);
+    var r1 = extract(pure(hf.identity),xs);
     expect(_.values(r1)).toEqual(_.values(xs));
   });
 });

@@ -1,18 +1,16 @@
-var lib = require('../../../lib/typeclasses');
-var instances = lib.retrieve([],[
+var hf = require('../helpers/function_helper');
+var hi = require('../helpers/interface_helper');
+var instances = hi.retrieve([],[
   'functor', 'applicative', 'monad', 'foldable', 'indexable', 'monoid'
 ]);
-
-var identity = function(x) { return x; };
 
 describe("list functor instance", function() {
   var fmap = instances.functor.map;
   it("fmap should apply the function to each element of the list", function() {
-    var succ = fmap([1,2,3], identity);
+    var succ = fmap([1,2,3], hf.identity);
     expect(succ).toEqual([1,2,3]);
-
-    var comp0 = fmap([1,2,3],function(f) { return f+1+2; });
-    var comp1 = fmap(fmap([1,2,3],function(f) { return f+1; }) ,function(f) { return f+2; });
+    var comp0 = fmap([1,2,3],hf.succ(3));
+    var comp1 = fmap(fmap([1,2,3],hf.succ(1)),hf.succ(2));
     expect(comp0).toEqual(comp1);
   });
 });
@@ -22,14 +20,12 @@ describe("list applicative instance", function() {
   var extract = instances.applicative.extract;
 
   it("pure should embed pure expressions", function(){
-    expect(pure(identity)).toEqual([identity]);
+    expect(pure(hf.identity)).toEqual([hf.identity]);
     expect(pure(1)).toEqual([1]);
   });
   it("extract should sequence computations and combine their results", function() {
-    expect(extract(pure(identity),[1])).toEqual([1]);
-    var fns = [ function(a){ return a+1; },
-                function(a){ return a+2; }
-              ];
+    expect(extract(pure(hf.identity),[1])).toEqual([1]);
+    var fns=[ hf.succ(1), hf.succ(2) ];
     expect(extract(fns, [1])).toEqual([2,3]);
   });
 });
@@ -46,11 +42,9 @@ describe("list foldable instance", function() {
   var foldr = instances.foldable.foldr;
   var foldl = instances.foldable.foldl;
   it("folds", function(){
-    var add = function(x,y) { return x+y; };
-    var s0 = foldr([1,2,3], add, 9);
+    var s0 = foldr([1,2,3], hf.add, 9);
     expect(s0).toEqual(15);
-    var join = function(x,y) { return x.concat(y); };
-    var s1 = foldl([[1],[2]], join, []);
+    var s1 = foldl([[1],[2]], hf.join, []);
     expect(s1).toEqual([1,2]);
   });
 });
