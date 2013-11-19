@@ -23,22 +23,22 @@ The monoid instances in this library call the identity `empty`, and the binary
 operator `plus`, such that the list instance can be defined:
 
 ```javascript
-  { plus: function(x,y) { return x.concat(y); }
-  , empty: []
-  }
+{ plus: function(x,y) { return x.concat(y); }
+, empty: []
+}
 ```
 
 Likewise, a lawful monoid instance for objects could operate on keys likeso:
 
 ```javascript
-  { plus: function(x,y) { 
-      for (var prop in y) {
-        x[prop] = y[prop];
-      }
-      return x;
-    } 
-  , empty: {}
-  }
+{ plus: function(x,y) { 
+    for (var prop in y) {
+      x[prop] = y[prop];
+    }
+    return x;
+  } 
+, empty: {}
+}
 ```
 
 (`plus` is equivalent to `_`'s `extend`.)
@@ -47,16 +47,16 @@ Given this common interface, we can write a generic function to reduce
 a same-typed list of values to a single values using `plus`:
 
 ```javascript
-  function mconcat(xs) {
-    var instances = retrieve(xs[0], ['monoid']);
-    with(instances.monoid) {
-      return xs.reduce(plus, zero);
-    }
-  };
+function mconcat(xs) {
+  var instances = retrieve(xs[0], ['monoid']);
+  with(instances.monoid) {
+    return xs.reduce(plus, zero);
+  }
+};
 ```
 
-Instances
----------
+Default instances
+-----------------
 
     lib/typeclasses/
     |-- applicative
@@ -88,13 +88,13 @@ Defining new instances and typeclasses
 --------------------------------------
 
 ```javascript
-    instances().retrieve(3, ['monoid'])
-      // => undefined
-    var product = { zero:1, plus:function(x,y){return x*y;} };
-    instances({Number:{monoid:product}}).retrieve(3, ['monoid']);
-      // monoid: { zero: 1, 
-      //           plus: function(x,y) { return x*y; } 
-      //         };
+instances().retrieve(3, ['monoid'])
+  // => undefined
+var product = { zero:1, plus:function(x,y){return x*y;} };
+instances({Number:{monoid:product}}).retrieve(3, ['monoid']);
+  // monoid: { zero: 1, 
+  //           plus: function(x,y) { return x*y; } 
+  //         };
 ```
 
 <!-- vim:set ft=markdown: -->
