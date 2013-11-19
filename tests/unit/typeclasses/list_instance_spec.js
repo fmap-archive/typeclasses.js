@@ -45,15 +45,13 @@ describe("list monad instance", function() {
 describe("list foldable instance", function() {
   var foldr = instances.foldable.foldr;
   var foldl = instances.foldable.foldl;
-  it("foldr", function(){
+  it("folds", function(){
     var add = function(x,y) { return x+y; };
-    var sum = foldr([1,2,3], add, 9);
-    expect(sum).toEqual(15);
-  });
-  it("foldl", function(){
+    var s0 = foldr([1,2,3], add, 9);
+    expect(s0).toEqual(15);
     var join = function(x,y) { return x.concat(y); };
-    var sum = foldr([[1],[2]], join, []);
-    expect(sum).toEqual([2,1]);
+    var s1 = foldl([[1],[2]], join, []);
+    expect(s1).toEqual([1,2]);
   });
 });
 describe("list indexable instance", function() {

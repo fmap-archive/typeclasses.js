@@ -28,7 +28,7 @@ operator `plus`, such that the list instance can be defined:
 
 Likewise, a lawful monoid instance for objects could operate on keys likeso:
 
-```javascript```
+```javascript
   { plus: function(x,y) { 
       for (var prop in y) {
         x[prop] = y[prop];
@@ -47,7 +47,7 @@ a same-typed list of values to a single values using `plus`:
 ```javascript
   function mconcat(xs) {
     var instances = retrieve(xs[0], ['monoid']);
-    with(instances) {
+    with(instances.monoid) {
       return xs.reduce(plus, zero);
     }
   };
