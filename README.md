@@ -1,6 +1,8 @@
 Typeclasses.js
 ==============
 
+:warning: Rather useless, mostly proof-of-concept. :warning:
+
 Typeclasses are generic interfaces that provide a common set of features for
 different types of values. When similar structure is imposed over differently
 typed values, and values sharing structure are known to share fundamental
@@ -51,6 +53,48 @@ a same-typed list of values to a single values using `plus`:
       return xs.reduce(plus, zero);
     }
   };
+```
+
+Instances
+---------
+
+    lib/typeclasses/
+    |-- applicative
+    |   |-- function.js 
+    |   |-- list.js
+    |   `-- object.js
+    |-- foldable
+    |   |-- list.js
+    |   `-- object.js
+    |-- function.js
+    |-- functor
+    |   |-- function.js
+    |   |-- list.js
+    |   `-- object.js
+    |-- indexable
+    |   |-- list.js
+    |   `-- object.js
+    |-- list.js
+    |-- monad
+    |   |-- function.js
+    |   |-- list.js
+    |   `-- object.js
+    |-- monoid
+    |   |-- list.js
+    |   `-- object.js
+    `-- object.js
+
+Defining new instances and typeclasses
+--------------------------------------
+
+```javascript
+    instances().retrieve(3, ['monoid'])
+      // => undefined
+    var product = { zero:1, plus:function(x,y){return x*y;} };
+    instances({Number:{monoid:product}}).retrieve(3, ['monoid']);
+      // monoid: { zero: 1, 
+      //           plus: function(x,y) { return x*y; } 
+      //         };
 ```
 
 <!-- vim:set ft=markdown: -->
