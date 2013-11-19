@@ -1,1 +1,1 @@
-module.exports = require('../../lib/typeclasses');
+module.exports = require('../../lib/typeclasses')();
