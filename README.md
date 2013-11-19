@@ -44,7 +44,7 @@ Likewise, a lawful monoid instance for objects could operate on keys likeso:
 (`plus` is equivalent to `_`'s `extend`.)
 
 Given this common interface, we can write a generic function to reduce
-a same-typed list of values to a single values using `plus`:
+a same-typed list of values to a single value using `plus`:
 
 ```javascript
 function mconcat(xs) {
@@ -88,13 +88,15 @@ Defining new instances and typeclasses
 --------------------------------------
 
 ```javascript
-instances().retrieve(3, ['monoid'])
-  // => undefined
-var product = { zero:1, plus:function(x,y){return x*y;} };
-instances({Number:{monoid:product}}).retrieve(3, ['monoid']);
-  // monoid: { zero: 1, 
-  //           plus: function(x,y) { return x*y; } 
-  //         };
+> typeclasses().retrieve(3,['monoid']);
+{ monoid: [Error: Missing monoid instance for Number!] }
+> var product = { zero: 1, plus: function(x,y) { return x*y; }};
+undefined
+> typeclasses({Number:{monoid:product}}).retrieve(3,['monoid'])
+{ monoid: { zero: 1, plus: [Function] } }
+> function T(){};
+> var t = new T();
+> var identity = function(x) { return x; };
+> typeclasses({T:{functor:{map:identity}}}).retrieve(s,['functor']);
+{ functor: { map: [Function] } }
 ```
-
-<!-- vim:set ft=markdown: -->
