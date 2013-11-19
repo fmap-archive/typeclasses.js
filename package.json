@@ -1,6 +1,11 @@
 { "name": "typeclasses",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Typeclasses write code for you.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fmap/typeclasses.js"
+  },
+  "license": "BSD",
   "dependencies": {
     "underscore": "~1.5.2"
   },
@@ -10,5 +15,6 @@
     "grunt-jasmine-node": "git://github.com/AmpexShouldTicklesDazzler/grunt-jasmine-node-multitask.git#multitask",
     "grunt-contrib-jshint": "0.6.4",
     "load-grunt-config": "0.5.0"
-  }
+  },
+  "main": "./lib/typeclasses.js"
 }
