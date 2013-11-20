@@ -1,7 +1,8 @@
 Typeclasses.js
 ==============
 
-:warning: Rather useless, mostly proof-of-concept. :warning:
+  - :warning: Rather useless, mostly proof-of-concept.
+  - :warning: The interface is shit. Plans for revision are described [here](https://github.com/fmap/typeclasses.js/issues/4).
 
 Typeclasses are generic interfaces that provide a common set of features for
 different types of values. When similar structure is imposed over differently
