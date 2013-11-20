@@ -55,6 +55,31 @@ function mconcat(xs) {
 };
 ```
 
+Monoid structure defined a relationship between same-typed values, regardless
+of how they're persisted - lists? trees? Thus, `mconcat` can be generalised to
+any structure that can be folded over. Due to a constraint in the current
+implementation, we need a way of retrieving a term of the container's value:
+
+```javascript
+function fst(struct) {
+  var instances = retrieve(struct, ['indexable'];
+  with (instances.indexable) {
+    return head(struct);
+  };
+};
+
+function mconcat(struct) {
+  var instances = retrieve(fst(struct), ['foldable', 'monoid']);
+  with (instances) {
+    return foldable.foldr(struct, monoid.plus, monoid.zero);
+  };
+};
+```
+
+Further, we could exploit the monoid's associativity requirement by
+parallelising the fold operator (in the *divide-and-conquer* pattern), though
+this is outside the scope of this tutorial..
+
 Default instances
 -----------------
 
@@ -96,7 +121,6 @@ undefined
 { monoid: { zero: 1, plus: [Function] } }
 > function T(){};
 > var t = new T();
-> var identity = function(x) { return x; };
-> typeclasses({T:{functor:{map:identity}}}).retrieve(s,['functor']);
+> typeclasses({T:{functor:{map:function(){}}}}).retrieve(s,['functor']);
 { functor: { map: [Function] } }
 ```
