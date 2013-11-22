@@ -122,6 +122,7 @@ undefined
 { monoid: { zero: 1, plus: [Function] } }
 > function I(x) { this.getIdentity = x; };
 > var i = new I(23);
-> typeclasses({I:{functor:{map:function(f,x){return new I(f(x.getIdentity));}}}}).retrieve(i,['functor']);
+> var identity = { map: function(f,x){return new I(f(x.getIdentity)}};
+> typeclasses({I:{functor:identity}}).retrieve(i,['functor']);
 { functor: { map: [Function] } }
 ```
