@@ -120,8 +120,8 @@ Defining new instances and typeclasses
 undefined
 > typeclasses({Number:{monoid:product}}).retrieve(3,['monoid'])
 { monoid: { zero: 1, plus: [Function] } }
-> function T(){};
-> var t = new T();
-> typeclasses({T:{functor:{map:function(){}}}}).retrieve(s,['functor']);
+> function I(x) { this.getIdentity = x; };
+> var i = new I(23);
+> typeclasses({I:{functor:{map:function(f,x){return new I(f(x.getIdentity));}}}}).retrieve(i,['functor']);
 { functor: { map: [Function] } }
 ```
